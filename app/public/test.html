@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport"
+				content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Document</title>
+	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+	<style>
+		.upload-btn {
+			width: 100px;
+			height: 100px;
+			background: #ccc;
+			line-height: 100px;
+			text-align: center;
+		}
+
+		#fileinput {
+			display: none;
+		}
+		img{
+			width: 100px;
+		}
+	</style>
+</head>
+<body>
+<div class="upload-btn">上传图片</div>
+<input type="file" id="fileinput">
+<script>
+var btn = document.querySelector( '.upload-btn' );
+var input = document.querySelector( '#fileinput' );
+var sourceImgUrl = '';
+btn.onclick = function() {
+  input.click();
+};
+input.onchange = function( e ) {
+  var $event = e || window.event;
+  var files = $event.target.files;
+  console.log( files );
+  var fr = new FileReader();
+  fr.onload = function( e ) {
+    console.log( fr.result );
+    sourceImgUrl = getFileBlob( fr.result );
+    upload( sourceImgUrl );
+  };
+  fr.readAsDataURL( files[0] );
+};
+
+function getFileBlob( file ) {
+  var data = file.split( ',' )[1];
+  // atob方法用于解码使用 base-64 编码的字符串。
+  data = window.atob( data );
+  // Uint8Array 数组类型表示一个8位无符号整型数组，创建时内容被初始化为0。创建完后，可以以对象的方式或使用数组下标索引的方式引用数组中的元素。
+  var ia = new Uint8Array( data.length );
+  for ( var i = 0; i < data.length; i++ ) {
+    ia[i] = data.charCodeAt( i );
+  }
+  // Blob() 构造函数返回一个新的 Blob 对象。 blob的内容由参数数组中给出的值的串联组成。
+  return new Blob( [ia], {type: 'image/png'} );
+}
+
+function upload( data ) {
+  /*
+  FormData()
+	创建一个新的 FormData 对象。
+	FormData.append()
+	向 FormData 中添加新的属性值，FormData 对应的属性值存在也不会覆盖原值，而是新增一个值，如果属性不存在则新增一项属性值。
+  formData.append(name, value);
+	formData.append(name, value, filename);
+
+	name
+	value中包含的数据对应的表单名称。
+	value
+	表单的值。可以是USVString 或 Blob (包括子类型，如 File)。
+	filename 可选
+	传给服务器的文件名称 (一个 USVString), 当一个 Blob 或 File 被作为第二个参数的时候， Blob 对象的默认文件名是 "blob"。 File 对象的默认文件名是该文件的名称。
+  * */
+
+  var fmData = new FormData();
+  fmData.append( 'avatar', data, 'avatar.png' );
+  axios.post( 'http://localhost:7001/uploadImg', fmData ).then( res => {
+    console.log( res );
+    var src = `http://localhost:7001${res.data.data[0]}`;
+    var img = document.createElement( 'img' );
+    img.src = src;
+    if ( document.querySelector( 'img' ) ) {
+      document.querySelector( 'img' ).remove();
+    }
+    document.body.appendChild( img );
+  } );
+}
+
+</script>
+</body>
+</html>
