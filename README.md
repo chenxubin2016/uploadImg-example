@@ -29,5 +29,5 @@ $ npm stop
 - Use `npm test` to run unit test.
 - Use `npm run autod` to auto detect dependencies upgrade, see [autod](https://www.npmjs.com/package/autod) for more detail.
 
-
+### [使用说明地址](https://www.jianshu.com/p/3828ae19631d)
 [egg]: https://eggjs.org
