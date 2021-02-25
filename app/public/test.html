@@ -1,66 +1,68 @@
 <!doctype html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport"
-				content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-	<meta http-equiv="X-UA-Compatible" content="ie=edge">
-	<title>Document</title>
-	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-	<style>
-		.upload-btn {
-			width: 100px;
-			height: 100px;
-			background: #ccc;
-			line-height: 100px;
-			text-align: center;
-		}
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <style>
+    .upload-btn {
+      width: 100px;
+      height: 100px;
+      background: #ccc;
+      line-height: 100px;
+      text-align: center;
+    }
 
-		#fileinput {
-			display: none;
-		}
-		img{
-			width: 100px;
-		}
-	</style>
+    #fileinput {
+      display: none;
+    }
+
+    img {
+      width: 100px;
+    }
+  </style>
 </head>
 <body>
 <div class="upload-btn">上传图片</div>
 <input type="file" id="fileinput">
 <script>
-var btn = document.querySelector( '.upload-btn' );
-var input = document.querySelector( '#fileinput' );
+var btn = document.querySelector('.upload-btn');
+var input = document.querySelector('#fileinput');
 var sourceImgUrl = '';
-btn.onclick = function() {
+btn.onclick = function () {
   input.click();
 };
-input.onchange = function( e ) {
+input.onchange = function (e) {
   var $event = e || window.event;
   var files = $event.target.files;
-  console.log( files );
+  console.log(files);
   var fr = new FileReader();
-  fr.onload = function( e ) {
-    console.log( fr.result );
-    sourceImgUrl = getFileBlob( fr.result );
-    upload( sourceImgUrl );
+  fr.onload = function (e) {
+    // console.log( fr.result );
+    sourceImgUrl = getFileBlob(fr.result);
+    upload(sourceImgUrl);
+    input.value = ''
   };
-  fr.readAsDataURL( files[0] );
+  fr.readAsDataURL(files[0]);
 };
 
-function getFileBlob( file ) {
-  var data = file.split( ',' )[1];
+function getFileBlob(file) {
+  var data = file.split(',')[1];
   // atob方法用于解码使用 base-64 编码的字符串。
-  data = window.atob( data );
+  data = window.atob(data);
   // Uint8Array 数组类型表示一个8位无符号整型数组，创建时内容被初始化为0。创建完后，可以以对象的方式或使用数组下标索引的方式引用数组中的元素。
-  var ia = new Uint8Array( data.length );
-  for ( var i = 0; i < data.length; i++ ) {
-    ia[i] = data.charCodeAt( i );
+  var ia = new Uint8Array(data.length);
+  for (var i = 0; i < data.length; i++) {
+    ia[i] = data.charCodeAt(i);
   }
   // Blob() 构造函数返回一个新的 Blob 对象。 blob的内容由参数数组中给出的值的串联组成。
-  return new Blob( [ia], {type: 'image/png'} );
+  return new Blob([ia], {type: 'image/png'});
 }
 
-function upload( data ) {
+function upload(data) {
   /*
   FormData()
 	创建一个新的 FormData 对象。
@@ -78,17 +80,17 @@ function upload( data ) {
   * */
 
   var fmData = new FormData();
-  fmData.append( 'avatar', data, 'avatar.png' );
-  axios.post( 'http://localhost:7001/uploadImg', fmData ).then( res => {
-    console.log( res );
+  fmData.append('avatar', data, 'avatar.png');
+  axios.post('http://localhost:7001/uploadImg', fmData).then(res => {
+    console.log(res);
     var src = `http://localhost:7001${res.data.data[0]}`;
-    var img = document.createElement( 'img' );
+    var img = document.createElement('img');
     img.src = src;
-    if ( document.querySelector( 'img' ) ) {
-      document.querySelector( 'img' ).remove();
+    if (document.querySelector('img')) {
+      document.querySelector('img').remove();
     }
-    document.body.appendChild( img );
-  } );
+    document.body.appendChild(img);
+  });
 }
 
 </script>
