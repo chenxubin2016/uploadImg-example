@@ -33,7 +33,8 @@
     "cov": "egg-bin cov",
     "lint": "eslint .",
     "ci": "npm run lint && npm run cov",
-    "autod": "autod"
+    "autod": "autod",
+    "lintfix": "eslint --fix --ext .js,app"
   },
   "ci": {
     "version": "10"

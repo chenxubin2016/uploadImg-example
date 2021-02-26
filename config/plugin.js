@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 /** @type Egg.EggPlugin */
 module.exports = {
@@ -9,6 +9,6 @@ module.exports = {
   // 跨域设置
   cors: {
     enable: true,
-    package: 'egg-cors'
-  },
+    package: "egg-cors"
+  }
 };

@@ -1,9 +1,9 @@
-'use strict';
+"use strict";
 
-const Controller = require('egg').Controller;
+const { Controller } = require("egg");
 
 class HomeController extends Controller {
-  async uploadImg(){
+  async uploadImg() {
     const { ctx } = this;
     ctx.body = await ctx.service.upload.uploadImg();
   }
