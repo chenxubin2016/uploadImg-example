@@ -35,9 +35,9 @@ exports.checkDir = async function(url) {
   const absUrl = path.join(this.app.baseDir, url);
   try {
     const res = await fsPromise.stat(absUrl);
-    // console.log('结果：', res)
+    console.log('结果：', res)
   } catch (e) {
-    // console.log('错误:', e)
+    console.log('错误:', e)
     await fsPromise.mkdir(absUrl);
   }
 };

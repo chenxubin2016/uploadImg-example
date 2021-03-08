@@ -13,7 +13,7 @@ class UserService extends Service {
     const urls = [];
     const stream = await parts();
     if (stream) {
-      const fileType = stream.mimeType.split("/")[ 1 ];
+      const fileType = stream.mimeType.split("/")[1];
       const filename = `${Date.now()}.${fileType}` || stream.filename.toLowerCase();
       await ctx.helper.checkDir("app/public/temporary");
       const target = path.join(this.config.baseDir, "app/public/temporary", filename);

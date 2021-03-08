@@ -2,17 +2,16 @@
 
 const { app, assert } = require("egg-mock/bootstrap");
 
-describe("test/app/controller/home.test.js", () => {
-  it("should assert", () => {
+describe("test/app/controller/home.test.js",function(){
+  it("should assert", function(){
     const pkg = require("../../../package.json");
     return assert(app.config.keys.startsWith(pkg.name));
   });
 
-  it("should GET /", () => {
-    return app.httpRequest()
+  it("should GET /",function(){
+    app.httpRequest()
       .get("/")
       .expect("hi, egg")
       .expect(200);
   });
-  return;
 });
