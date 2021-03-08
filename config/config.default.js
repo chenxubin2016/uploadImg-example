@@ -20,13 +20,17 @@ module.exports = appInfo => {
     maxFiles: 1000
   };
   // 跨域设置
-  config.security = {csrf: {enable: false},domainWhiteList: ["*"]};
-  config.cors = {origin: "*",allowMethods: "GET,HEAD,PUT,POST,DELETE,PATCH,OPTIONS"};
+  config.security = {
+    csrf: { enable: false },
+    domainWhiteList: [ "*" ]
+  };
+  config.cors = {
+    origin: "*",
+    allowMethods: "GET,HEAD,PUT,POST,DELETE,PATCH,OPTIONS"
+  };
 
   // add your user config here
-  const userConfig = {
-    // myAppName: 'egg',
-  };
+  const userConfig = {};
 
   return {
     ...config,
