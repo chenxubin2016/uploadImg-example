@@ -29,7 +29,6 @@ module.exports = appInfo => {
     allowMethods: "GET,HEAD,PUT,POST,DELETE,PATCH,OPTIONS"
   };
 
-  // add your user config here
   const userConfig = {};
 
   return {

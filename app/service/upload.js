@@ -1,4 +1,5 @@
 "use strict";
+
 const { Service } = require("egg");
 const fs = require("fs");
 const path = require("path");
